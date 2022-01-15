@@ -1,5 +1,5 @@
 import numpy as np
-import test_func
+import * from test_func
 
 def test1():
     result = test_func()
