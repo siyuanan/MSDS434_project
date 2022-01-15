@@ -6,9 +6,9 @@ install:
 		pip install -r requirements.txt
 
 test:
-	python -m pytest -vv -- tests/*.py
+	python -m pytest -vv test1.py
 
 lint:
-	pylint --disable=R,C myrepolib cli web
+	pylint --disable=R, C *.py
 
 all: install lint test
