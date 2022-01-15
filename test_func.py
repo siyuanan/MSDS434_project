@@ -1,2 +1,2 @@
 def test_func(): 
-    retunr "Test"
+    return "Test"
