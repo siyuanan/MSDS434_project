@@ -1,6 +1,5 @@
-import numpy as np
 import * from test_func
 
 def test1():
     result = test_func()
-    assert resutl == np.array([[1,2], [3,4], [5,6]])
+    assert resutl == "Test1"
