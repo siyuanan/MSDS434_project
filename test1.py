@@ -1,5 +1,5 @@
 from test_func import test_func
-from webapp import main
+import main
 
 def test1():
     result = test_func()
