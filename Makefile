@@ -8,7 +8,7 @@ install:
 test:
 	python -m pytest -vv test1.py
 	
-formatL 
+format:
 	black *.py
 
 lint:
