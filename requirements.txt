@@ -9,3 +9,5 @@ click==8.0.3
 Flask==2.0.2
 black==21.12b0
 gunicorn==20.0.4
+google-cloud-bigquery
+pyarrow
