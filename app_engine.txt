@@ -1,5 +1,8 @@
 # this is the instruction on Google App Engine in CLOUD SHELL
 
+# set project id
+gcloud config set project 'msds434-2022-sa'
+
 # activate virtual environment
 source ~/.venv/bin/activate
 
