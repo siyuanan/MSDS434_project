@@ -1,0 +1,6 @@
+# this is the instruction on Google App Engine in CLOUD SHELL
+
+# activate virtual environment
+source ~/.venv/bin/activate
+
+#
