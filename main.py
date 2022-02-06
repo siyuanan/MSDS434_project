@@ -19,7 +19,7 @@ def title_line():
 def model_train():
     t1 = datetime.now()
     query_train = f'''
-        CREATE OR REPLACE MODEL {project_id}.{dataset_id}.lr_model
+        CREATE OR REPLACE MODEL {project_id}.{dataset_id}.lr_model2
           OPTIONS
           ( MODEL_TYPE = 'LOGISTIC_REG',
             AUTO_CLASS_WEIGHTS = TRUE )
