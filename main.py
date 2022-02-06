@@ -59,7 +59,6 @@ def model_train():
 
 @app.route("/")
 def main_func(): 
-    model_train()
     return welcome() + title_line() + model_train()
 
 if __name__ == "__main__":
