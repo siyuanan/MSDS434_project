@@ -1,6 +1,6 @@
 from flask import Flask
 from google.cloud import bigquery
-from datatime import datetime
+from datetime import datetime
 
 project_id  = 'msds434-2022-sa'
 dataset_id  = 'mobile_data'
