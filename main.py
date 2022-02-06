@@ -6,7 +6,7 @@ app = Flask(__name__)
 def welcome():
     return "Welcome to the new app!"
 
-def welcome():
+def title_line():
     return "This is for mobile price prediction"
 
 if __name__ == "__main__":
