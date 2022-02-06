@@ -6,6 +6,7 @@ app = Flask(__name__)
 def welcome():
     return "Welcome to the new app!"
 
+@app.route("/")
 def title_line():
     return "This is for mobile price prediction"
 
