@@ -17,7 +17,7 @@ def title_line():
     return "<br/><br/>This is for mobile price prediction"
 
 def model_train():
-    t1 = datetime.now()
+#     t1 = datetime.now()
     query_train = f'''
         CREATE OR REPLACE MODEL {project_id}.{dataset_id}.lr_model2
           OPTIONS
@@ -51,15 +51,34 @@ def model_train():
     client = bigquery.Client(project = project_id)
     query_job = client.query(query_train)
     query_job.result()
-    t2 = datetime.now()
-    exe_time = (t2 - t1).total_seconds()
+#     t2 = datetime.now()
+#     exe_time = (t2 - t1).total_seconds()
     
-    return f"<br/><br/>Model training finished in {exe_time} s"
+    return f"<br/><br/>Model training finished"
+
+def model_test():
+    query_train = f'''
+        SELECT * FROM
+            ML.PREDICT(MODEL `msds434-2022-sa.mobile_data.lr_model`,
+              (
+              SELECT
+                *
+              FROM
+                `msds434-2022-sa.mobile_data.test`
+                )
+              )
+            LIMIT 10
+        '''
+    client = bigquery.Client(project = project_id)
+    query_job = client.query(query_train)
+    query_job.result()
+    
+    return f"<br/><br/>Model prediction finished"
 
 
 @app.route("/")
 def main_func(): 
-    return welcome() + title_line() + model_train()
+    return welcome() + title_line() + model_test()
 
 if __name__ == "__main__":
     app.run(host = '127.0.0.1', port = 8080, debug = True)
