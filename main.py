@@ -57,7 +57,7 @@ def model_train():
     return f"<br/><br/>Model training finished"
 
 def model_test():
-    query_train = f'''
+    query_test = f'''
         SELECT * FROM
             ML.PREDICT(MODEL `msds434-2022-sa.mobile_data.lr_model`,
               (
@@ -70,15 +70,25 @@ def model_test():
             LIMIT 10
         '''
     client = bigquery.Client(project = project_id)
-    query_job = client.query(query_train)
+    query_job = client.query(query_test)
     query_job.result()
     
     return f"<br/><br/>Model prediction finished"
 
+def pred_result(): 
+    query = f'''
+    SELECT * FROM {project_id}.{dataset_id}.pred
+    '''
+    client = bigquery.Client(project = project_id)
+    query_job = client.query(query)
+    data = query_job.to_dataframe()
+    
+    return "<br/><br/>" + data.to_string()
+    
 
 @app.route("/")
 def main_func(): 
-    return welcome() + title_line() + model_test()
+    return welcome() + title_line() + pred_result()
 
 if __name__ == "__main__":
     app.run(host = '127.0.0.1', port = 8080, debug = True)
