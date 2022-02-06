@@ -1,5 +1,6 @@
 from flask import Flask
 from google.cloud import bigquery
+from datatime import datetime
 
 project_id  = 'msds434-2022-sa'
 dataset_id  = 'mobile_data'
@@ -13,22 +14,53 @@ def welcome():
     return "Welcome to the new app!"
 
 def title_line():
-    return "This is for mobile price prediction"
+    return "<br/><br/>This is for mobile price prediction"
 
-def pred_test():
-    query = f'''
-    SELECT * FROM {project_id}.{dataset_id}.synthetic order by rand() limit 10
-    '''
+def model_train():
+    t1 = datetime.now()
+    query_train = f'''
+        CREATE OR REPLACE MODEL {project_id}.{dataset_id}.lr_model
+          OPTIONS
+          ( MODEL_TYPE = 'LOGISTIC_REG',
+            AUTO_CLASS_WEIGHTS = TRUE )
+        AS SELECT 
+        battery_power,
+        blue,
+        clock_speed,
+        dual_sim,
+        fc,
+        four_g,
+        int_memory,
+        m_dep,
+        mobile_wt,
+        n_cores,
+        pc,
+        px_height,
+        px_width,
+        ram,
+        sc_h,
+        sc_w,
+        talk_time,
+        three_g,
+        touch_screen,
+        wifi,
+        price_range as label
+        FROM `{project_id}.{dataset_id}.{table_train}`
+        order by rand() limit 100
+        '''
     client = bigquery.Client(project = project_id)
-    query_job = client.query(query)
-    data = query_job.to_dataframe()
+    query_job = client.query(query_train)
+    query_job.result()
+    t2 = datetime.now()
+    exe_time = (t2 - t1).total_seconds()
     
-    return
+    return f"<br/><br/>Model training finished in {exe_time} s"
 
 
 @app.route("/")
 def main_func(): 
-    return welcome() + '<br/><br/>' + title_line()
+    model_train()
+    return welcome() + title_line() + model_train()
 
 if __name__ == "__main__":
     app.run(host = '127.0.0.1', port = 8080, debug = True)
