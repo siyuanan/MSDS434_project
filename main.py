@@ -1,4 +1,5 @@
-from flask import Flask
+import pandas as pd
+from flask import Flask, render_template
 from google.cloud import bigquery
 from datetime import datetime
 
@@ -15,6 +16,15 @@ def welcome():
 
 def title_line():
     return "<br/><br/>This is for mobile price prediction"
+
+@app.route("/")
+def test_df(): 
+    data = pd.DataFrame({
+        'A': [1,2,3],
+        'B': [4,5,6],
+        'C': [7,8,9]
+    })
+    return render_template('view.html',tables=[data.to_html(classes='data')], titles = data.columns.values)
 
 def model_train():
 #     t1 = datetime.now()
@@ -86,9 +96,10 @@ def pred_result():
     return "<br/><br/>" + render_template('view.html',tables=[data.to_html()])
     
 
-@app.route("/")
+# @app.route("/")
 def main_func(): 
-    return welcome() + title_line() + pred_result()
+#     return welcome() + title_line() + pred_result()
+    return welcome() + title_line() + test_df()
 
 if __name__ == "__main__":
-    app.run(host = '127.0.0.1', port = 8080, debug = True)
+    app.run(host = '127.0.0.1', debug = True)
