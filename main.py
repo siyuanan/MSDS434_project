@@ -11,7 +11,7 @@ table_synth = 'synthetic'
 app = Flask(__name__)
 
 def welcome():
-    return "Welcome to the new app!"
+    return "Welcome to the new app (dev branch)!"
 
 def title_line():
     return "<br/><br/>This is for mobile price prediction"
@@ -83,7 +83,7 @@ def pred_result():
     query_job = client.query(query)
     data = query_job.to_dataframe()
     
-    return "<br/><br/>" + data.to_string()
+    return "<br/><br/>" + tabulate(data, headers = 'keys', tablefmt = 'psql')
     
 
 @app.route("/")
