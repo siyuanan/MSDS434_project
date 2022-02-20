@@ -83,7 +83,7 @@ def pred_result():
     query_job = client.query(query)
     data = query_job.to_dataframe()
     
-    return "<br/><br/>" + render_template('view.html',tables=[data.to_html())
+    return "<br/><br/>" + render_template('view.html',tables=[data.to_html()])
     
 
 @app.route("/")
