@@ -11,12 +11,6 @@ table_synth = 'synthetic'
 
 app = Flask(__name__)
 
-def welcome():
-    return "Welcome to the new app (dev branch)!"
-
-def title_line():
-    return "<br/><br/>This is for mobile price prediction"
-
 @app.route("/")
 def test_df(): 
     data = pd.DataFrame({
@@ -98,8 +92,7 @@ def pred_result():
 
 # @app.route("/")
 def main_func(): 
-#     return welcome() + title_line() + pred_result()
-    return welcome() + title_line() + test_df()
+    return welcome() + title_line() + pred_result()
 
 if __name__ == "__main__":
     app.run(host = '127.0.0.1', debug = True)
