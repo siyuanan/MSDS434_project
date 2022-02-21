@@ -11,7 +11,7 @@ table_synth = 'synthetic'
 
 app = Flask(__name__)
 
-@app.route("/")
+# @app.route("/")
 def test_df(): 
     data = pd.DataFrame({
         'A': [1,2,3],
@@ -79,6 +79,7 @@ def model_test():
     
     return f"<br/><br/>Model prediction finished"
 
+@app.route("/")
 def pred_result(): 
     query = f'''
     SELECT * FROM {project_id}.{dataset_id}.pred
@@ -87,7 +88,7 @@ def pred_result():
     query_job = client.query(query)
     data = query_job.to_dataframe()
     
-    return "<br/><br/>" + render_template('view.html',tables=[data.to_html()])
+    return render_template('view.html',tables=[data.to_html(classes='data')], titles = data.columns.values)
     
 
 # @app.route("/")
