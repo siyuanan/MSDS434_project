@@ -4,6 +4,7 @@
 gcloud config set project 'msds434-2022-sa'
 
 # activate virtual environment
+virtualenv ~/.venv
 source ~/.venv/bin/activate
 
 cd into the MSDS folder
