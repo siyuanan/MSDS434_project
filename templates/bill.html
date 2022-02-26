@@ -21,7 +21,7 @@
             var linechart = new Chart(ctx, {
               type: "line", 
               data: {
-                labels: {{ time | safe }}
+                labels: {{ time_label | safe }}
                 datasets: [{label: "cost", data: {{ cost | safe }}, fill: false, borderColor: "rgb(75, 192, 192)"}] 
               },
               options: {
