@@ -69,12 +69,20 @@
                 data: {
                     labels: {{ labels| safe }},
                     datasets: [{
-                        label: 'cost',
-                        data: {{ values | safe }},
+                        label: 'actual cost',
+                        data: {{ values1 | safe }},
                         borderWidth: 5,
                         fill: false,
                         borderColor: '#fc8403'
-                    }]
+                    }, {
+                        label: 'forecast cost',
+                        data: {{ values2 | safe }},
+                        borderWidth: 5,
+                        fill: false,
+                        borderColor: '#6b9362'
+                    }
+                    ],
+                                  
                 },
                 options: {
                     responsive: false,
