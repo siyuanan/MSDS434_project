@@ -82,7 +82,7 @@ def model_test():
 @app.route("/")
 def pred_result(): 
     query = f'''
-    SELECT * FROM {project_id}.{dataset_id}.pred
+    SELECT * FROM {project_id}.{dataset_id}.lr_pred
     '''
     client = bigquery.Client(project = project_id)
     query_job = client.query(query)
