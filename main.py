@@ -118,8 +118,8 @@ def bill_plot():
     values = list(data['cost'])
     
 #     return render_template('view.html',tables = [data.to_html(classes='data')], titles = data.columns.values)
-#     return render_template("bill.html", labels = labels, values = values)
-    return ' '.join(labels) + '<br/><br/>' + ' '.join([str(x) for x in values])
+    return render_template("bill.html", labels = labels, values = values)
+#     return ' '.join(labels) + '<br/><br/>' + ' '.join([str(x) for x in values])
 
 if __name__ == "__main__":
     app.run(host = '127.0.0.1', debug = True)
