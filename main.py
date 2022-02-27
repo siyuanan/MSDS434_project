@@ -97,7 +97,7 @@ def bill_plot():
     SELECT usage_start_time AS time_label, sum(cost) as cost
     FROM `{project_id}.billing.sample2`
     WHERE usage_start_time >= '2022-02-01'
-    group by 1
+    GROUP by 1
     ORDER BY 1
     '''
     client = bigquery.Client(project = project_id)
@@ -113,11 +113,12 @@ def bill_plot():
     query_job = client.query(query)
     df2 = query_job.to_dataframe()
     
-    df = pd.concat([df1, df2], ignore_index = True)
+    data = pd.concat([df1, df2], ignore_index = True)
     time_label = list(df['time_label'])
     cost       = list(df['cost'])
     
-    return render_template("bill.html", labels = time_label, values = cost)
+    return render_template('view.html',tables = [data.to_html(classes='data')], titles = data.columns.values)
+#     return render_template("bill.html", labels = time_label, values = cost)
 
 if __name__ == "__main__":
     app.run(host = '127.0.0.1', debug = True)
