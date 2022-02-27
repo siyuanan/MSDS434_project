@@ -114,7 +114,7 @@ def bill_plot():
     query_job = client.query(query)
     df2 = query_job.to_dataframe()
     
-    data = df1.merge(df2, on = 'usage_date', how = 'outer')
+    data = df1.merge(df2, on = 'usage_date', how = 'outer').fillna(0)
     labels = list(pd.to_datetime(data['usage_date']).dt.strftime('%Y-%m-%d'))
     value1 = data['actual'].values.tolist()
     value2 = data['forecast'].values.tolist()
