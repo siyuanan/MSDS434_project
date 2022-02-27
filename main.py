@@ -115,7 +115,7 @@ def bill_plot():
     df2 = query_job.to_dataframe()
     
     data = pd.concat([df1, df2], ignore_index = True)
-    labels = list(data['usage_date'].dt.strftime('%Y-%m-%d'))
+    labels = list(pd.to_datetime(data['usage_date']).dt.strftime('%Y-%m-%d'))
     values = data['cost'].values.tolist()
     
 #     return render_template('view.html',tables = [data.to_html(classes='data')], titles = data.columns.values)
