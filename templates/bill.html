@@ -59,25 +59,41 @@
     
     <h2> Billing Actual and Forecast </h2>
     <body>
-        <canvas id="linechart", width="900", height="500"></canvas>
+        <div>
+            <canvas id="billChart"></canvas>
+        </div>
         <script>
-            var ctx = document.getElementById("linechart").getContext("2d");
-            var linechart = new Chart(ctx, {
-              type: "line", 
-              data: {
-                labels: {{ labels | safe }},
-                datasets: [{
-                    label: "cost", 
-                    data: {{ values | safe }}, 
-                    fill: false, 
-                    borderColor: "rgb(75, 192, 192)"
-                }] 
-              },
-              options: {
-                  responsive: false 
-              }
+            var ctx = document.getElementById('billChart').getContext('2d');
+            var labels = {{ labels| safe }};
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'cost',
+                        data: {{ values | safe }},
+                        borderWidth: 5,
+                        fill: false,
+                        borderColor: '#fc8403'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'cost'
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
+                    }}
             });
+
         </script>
+        
     </body>
       
 </html>
+
+
+        
