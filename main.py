@@ -94,7 +94,7 @@ def pred_result():
 @app.route("/billing")
 def bill_plot(): 
     query = f'''
-    SELECT DATE(usage_start_time) AS usage_date, sum(cost) as cost
+    SELECT DATE(usage_start_time) AS usage_date, sum(cost) as actual
     FROM `{project_id}.billing.sample2`
     WHERE usage_start_time >= '2022-02-01'
     GROUP by 1
@@ -105,7 +105,7 @@ def bill_plot():
     df1 = query_job.to_dataframe()
     
     query = f'''
-    SELECT DATE(forecast_timestamp) AS usage_date, sum(forecast_value) as cost
+    SELECT DATE(forecast_timestamp) AS usage_date, sum(forecast_value) as forecast
     FROM `{project_id}.billing.sample2_pred`
     GROUP BY 1
     ORDER BY 1
@@ -114,12 +114,13 @@ def bill_plot():
     query_job = client.query(query)
     df2 = query_job.to_dataframe()
     
-    data = pd.concat([df1, df2], ignore_index = True)
+    data = df1.merge(df2, on = 'usage_date', how = 'outer')
     labels = list(pd.to_datetime(data['usage_date']).dt.strftime('%Y-%m-%d'))
-    values = data['cost'].values.tolist()
+    value1 = data['actual'].values.tolist()
+    value2 = data['forecast'].values.tolist()
     
 #     return render_template('view.html',tables = [data.to_html(classes='data')], titles = data.columns.values)
-    return render_template("bill.html", labels = labels, values = values)
+    return render_template("bill.html", labels = labels, value1 = value1, value2 = value2)
 #     return ' '.join(labels) + '<br/><br/>' + ' '.join([str(x) for x in values])
 
 if __name__ == "__main__":
