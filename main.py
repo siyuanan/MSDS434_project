@@ -114,11 +114,12 @@ def bill_plot():
     df2 = query_job.to_dataframe()
     
     data = pd.concat([df1, df2], ignore_index = True)
-    labels = list(data['time_label'])
+    labels = list(data['time_label'].astype(str))
     values = list(data['cost'])
     
 #     return render_template('view.html',tables = [data.to_html(classes='data')], titles = data.columns.values)
-    return render_template("bill.html", labels = labels, values = values)
+#     return render_template("bill.html", labels = labels, values = values)
+    return ' '.join(labels) + '<br/><br/>' + ' '.join([str(x) for x in values])
 
 if __name__ == "__main__":
     app.run(host = '127.0.0.1', debug = True)
