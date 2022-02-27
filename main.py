@@ -94,7 +94,7 @@ def pred_result():
 @app.route("/billing")
 def bill_plot(): 
     query = f'''
-    SELECT usage_start_time AS time_label, sum(cost) as cost
+    SELECT DATE(usage_start_time) AS usage_date, sum(cost) as cost
     FROM `{project_id}.billing.sample2`
     WHERE usage_start_time >= '2022-02-01'
     GROUP by 1
@@ -105,8 +105,9 @@ def bill_plot():
     df1 = query_job.to_dataframe()
     
     query = f'''
-    SELECT forecast_timestamp AS time_label, forecast_value as cost
+    SELECT DATE(forecast_timestamp) AS usage_date, sum(forecast_value) as cost
     FROM `{project_id}.billing.sample2_pred`
+    GROUP BY 1
     ORDER BY 1
     '''
     client = bigquery.Client(project = project_id)
@@ -114,7 +115,7 @@ def bill_plot():
     df2 = query_job.to_dataframe()
     
     data = pd.concat([df1, df2], ignore_index = True)
-    labels = data['time_label'].values.tolist()
+    labels = data['usage_date'].values.tolist()
     values = data['cost'].values.tolist()
     
 #     return render_template('view.html',tables = [data.to_html(classes='data')], titles = data.columns.values)
