@@ -18,8 +18,8 @@
     <body>
         <canvas id="myChart" width="400" height="400"></canvas>
         <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
+        const ctx1 = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx1, {
             type: 'bar',
             data: {
                 labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -60,15 +60,14 @@
     <h2> Billing Actual and Forecast </h2>
     <body>
         <div>
-            <canvas id="billChart"></canvas>
+            <canvas id="billChart" width = "900" height = "500"></canvas>
         </div>
         <script>
-            var ctx = document.getElementById('billChart').getContext('2d');
-            var labels = {{ labels| safe }};
-            var chart = new Chart(ctx, {
+            var ctx2 = document.getElementById('billChart').getContext('2d');
+            var chart = new Chart(ctx2, {
                 type: 'line',
                 data: {
-                    labels,
+                    labels: {{ labels| safe }},
                     datasets: [{
                         label: 'cost',
                         data: {{ values | safe }},
@@ -78,7 +77,7 @@
                     }]
                 },
                 options: {
-                    responsive: true,
+                    responsive: false,
                     title: {
                         display: true,
                         text: 'cost'
