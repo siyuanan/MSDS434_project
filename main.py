@@ -117,8 +117,8 @@ def bill_plot():
     time_label = list(data['time_label'])
     cost       = list(data['cost'])
     
-    return render_template('view.html',tables = [data.to_html(classes='data')], titles = data.columns.values)
-#     return render_template("bill.html", labels = time_label, values = cost)
+#     return render_template('view.html',tables = [data.to_html(classes='data')], titles = data.columns.values)
+    return render_template("bill.html", labels = time_label, values = cost)
 
 if __name__ == "__main__":
     app.run(host = '127.0.0.1', debug = True)
