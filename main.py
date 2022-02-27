@@ -114,8 +114,8 @@ def bill_plot():
     df2 = query_job.to_dataframe()
     
     data = pd.concat([df1, df2], ignore_index = True)
-    labels = list(data['time_label'].astype(str))
-    values = list(data['cost'])
+    labels = data['time_label'].values.tolist()
+    values = data['cost'].values.tolist()
     
 #     return render_template('view.html',tables = [data.to_html(classes='data')], titles = data.columns.values)
     return render_template("bill.html", labels = labels, values = values)
