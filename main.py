@@ -1,7 +1,7 @@
 import pandas as pd
 from flask import Flask, render_template
 from google.cloud import bigquery
-from datetime import datetime
+# from datetime import datetime
 
 project_id  = 'msds434-2022-sa'
 dataset_id  = 'mobile_data'
@@ -49,12 +49,12 @@ def model_train():
 #     t2 = datetime.now()
 #     exe_time = (t2 - t1).total_seconds()
     
-    return f"<br/><br/>Model training finished"
+    return "<br/><br/>Model training finished"
 
 def model_test():
     query_test = f'''
         SELECT * FROM
-            ML.PREDICT(MODEL `msds434-2022-sa.mobile_data.lr_model`,
+            ML.PREDICT(MODEL `{project_id}.{dataset_id}.lr_model`,
               (
               SELECT
                 *
@@ -68,7 +68,7 @@ def model_test():
     query_job = client.query(query_test)
     query_job.result()
     
-    return f"<br/><br/>Model prediction finished"
+    return "<br/><br/>Model prediction finished"
 
 @app.route("/")
 def pred_result(): 
