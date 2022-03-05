@@ -11,15 +11,6 @@ table_synth = 'synthetic'
 
 app = Flask(__name__)
 
-# @app.route("/")
-def test_df(): 
-    data = pd.DataFrame({
-        'A': [1,2,3],
-        'B': [4,5,6],
-        'C': [7,8,9]
-    })
-    return render_template('view.html',tables=[data.to_html(classes='data')], titles = data.columns.values)
-
 def model_train():
 #     t1 = datetime.now()
     query_train = f'''
@@ -88,7 +79,7 @@ def pred_result():
     query_job = client.query(query)
     data = query_job.to_dataframe()
     
-    return render_template('view.html',tables=[data.to_html(classes='data')], titles = data.columns.values)
+    return render_template('main.html',tables=[data.to_html(classes='data')], titles = data.columns.values)
     
 
 @app.route("/billing")
@@ -118,10 +109,9 @@ def bill_plot():
     labels = list(pd.to_datetime(data['usage_date']).dt.strftime('%Y-%m-%d'))
     value1 = data['actual'].values.tolist()
     value2 = data['forecast'].values.tolist()
-    
-#     return render_template('view.html',tables = [data.to_html(classes='data')], titles = data.columns.values)
+
     return render_template("bill.html", labels = labels, value1 = value1, value2 = value2)
-#     return ' '.join(labels) + '<br/><br/>' + ' '.join([str(x) for x in values])
+
 
 if __name__ == "__main__":
     app.run(host = '127.0.0.1', debug = True)
