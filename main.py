@@ -1,4 +1,5 @@
-from flask import Flask
+import pandas as pd
+from flask import Flask, render_template
 from google.cloud import bigquery
 from datetime import datetime
 
@@ -10,11 +11,14 @@ table_synth = 'synthetic'
 
 app = Flask(__name__)
 
-def welcome():
-    return "Welcome to the new app!"
-
-def title_line():
-    return "<br/><br/>This is for mobile price prediction"
+# @app.route("/")
+def test_df(): 
+    data = pd.DataFrame({
+        'A': [1,2,3],
+        'B': [4,5,6],
+        'C': [7,8,9]
+    })
+    return render_template('view.html',tables=[data.to_html(classes='data')], titles = data.columns.values)
 
 def model_train():
 #     t1 = datetime.now()
@@ -75,20 +79,49 @@ def model_test():
     
     return f"<br/><br/>Model prediction finished"
 
+@app.route("/")
 def pred_result(): 
     query = f'''
-    SELECT * FROM {project_id}.{dataset_id}.pred
+    SELECT * FROM {project_id}.{dataset_id}.lr_pred
     '''
     client = bigquery.Client(project = project_id)
     query_job = client.query(query)
     data = query_job.to_dataframe()
     
-    return "<br/><br/>" + data.to_string()
+    return render_template('view.html',tables=[data.to_html(classes='data')], titles = data.columns.values)
     
 
-@app.route("/")
-def main_func(): 
-    return welcome() + title_line() + pred_result()
+@app.route("/billing")
+def bill_plot(): 
+    query = f'''
+    SELECT DATE(usage_start_time) AS usage_date, sum(cost) as actual
+    FROM `{project_id}.billing.sample2`
+    WHERE usage_start_time >= '2022-02-01'
+    GROUP by 1
+    ORDER BY 1
+    '''
+    client = bigquery.Client(project = project_id)
+    query_job = client.query(query)
+    df1 = query_job.to_dataframe()
+    
+    query = f'''
+    SELECT DATE(forecast_timestamp) AS usage_date, sum(forecast_value) as forecast
+    FROM `{project_id}.billing.sample2_pred`
+    GROUP BY 1
+    ORDER BY 1
+    '''
+    client = bigquery.Client(project = project_id)
+    query_job = client.query(query)
+    df2 = query_job.to_dataframe()
+    
+    data = df1.merge(df2, on = 'usage_date', how = 'outer').fillna(0)
+    labels = list(pd.to_datetime(data['usage_date']).dt.strftime('%Y-%m-%d'))
+    value1 = data['actual'].values.tolist()
+    value2 = data['forecast'].values.tolist()
+    
+#     return render_template('view.html',tables = [data.to_html(classes='data')], titles = data.columns.values)
+    return render_template("bill.html", labels = labels, value1 = value1, value2 = value2)
+#     return ' '.join(labels) + '<br/><br/>' + ' '.join([str(x) for x in values])
 
 if __name__ == "__main__":
-    app.run(host = '127.0.0.1', port = 8080, debug = True)
+    app.run(host = '127.0.0.1', debug = True)
