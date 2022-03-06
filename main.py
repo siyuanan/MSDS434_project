@@ -82,7 +82,7 @@ def pred_result():
     return render_template('main.html',tables=[data.to_html(classes='data')], titles = data.columns.values)
     
 
-@app.route("/billing")
+@app.route("/billing", methods=['POST'])
 def bill_plot(): 
     query = f'''
     SELECT DATE(usage_start_time) AS usage_date, sum(cost) as actual
