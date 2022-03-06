@@ -46,7 +46,7 @@ def model_train():
     query_job = client.query(query_train)
     query_job.result()
     
-    return "<br/><br/>Model training finished"
+    return "Model training finished"
 
 def model_test():
     query_test = f'''
@@ -65,7 +65,7 @@ def model_test():
     query_job = client.query(query_test)
     query_job.result()
     
-    return "<br/><br/>Model prediction finished"
+    return "Model prediction finished"
 
 @app.route("/")
 def pred_result(): 
