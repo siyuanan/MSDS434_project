@@ -12,7 +12,7 @@ table_synth = 'synthetic'
 app = Flask(__name__)
 
 def model_train():
-#     t1 = datetime.now()
+
     query_train = f'''
         CREATE OR REPLACE MODEL {project_id}.{dataset_id}.lr_model2
           OPTIONS
@@ -46,8 +46,6 @@ def model_train():
     client = bigquery.Client(project = project_id)
     query_job = client.query(query_train)
     query_job.result()
-#     t2 = datetime.now()
-#     exe_time = (t2 - t1).total_seconds()
     
     return "<br/><br/>Model training finished"
 
