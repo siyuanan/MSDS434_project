@@ -1,7 +1,6 @@
 import pandas as pd
 from flask import Flask, render_template
 from google.cloud import bigquery
-# from datetime import datetime
 
 project_id  = 'msds434-2022-sa'
 dataset_id  = 'mobile_data'
