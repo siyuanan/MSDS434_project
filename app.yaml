@@ -1,4 +1,4 @@
-name: Mobile Price Range Estimation
+name: "Mobile Price Range Estimation"
 
 on: 
   push: 
