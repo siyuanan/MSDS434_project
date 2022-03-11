@@ -49,24 +49,24 @@ def model_train():
     
     return "Model training finished"
 
-def model_test():
-    query_test = f'''
-        SELECT * FROM
-            ML.PREDICT(MODEL `{project_id}.{dataset_id}.lr_model`,
-              (
-              SELECT
-                *
-              FROM
-                `msds434-2022-sa.mobile_data.test`
-                )
-              )
-            LIMIT 10
-        '''
-    client = bigquery.Client(project = project_id)
-    query_job = client.query(query_test)
-    query_job.result()
+# def model_test():
+#     query_test = f'''
+#         SELECT * FROM
+#             ML.PREDICT(MODEL `{project_id}.{dataset_id}.lr_model`,
+#               (
+#               SELECT
+#                 *
+#               FROM
+#                 `msds434-2022-sa.mobile_data.test`
+#                 )
+#               )
+#             LIMIT 10
+#         '''
+#     client = bigquery.Client(project = project_id)
+#     query_job = client.query(query_test)
+#     query_job.result()
     
-    return "Model prediction finished"
+#     return "Model prediction finished"
 
 @app.route("/")
 def pred_result(): 
