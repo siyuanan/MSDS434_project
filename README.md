@@ -3,18 +3,18 @@ MSDS 434 final project
 
 ## Google App Engine
 
-set project id
+set project id <br>
 gcloud config set project 'msds434-2022-sa'
 
-activate virtual environment
+activate virtual environment <br>
 virtualenv ~/.venv
 source ~/.venv/bin/activate
 
-cd into the MSDS folder
-git pull to get the most recent update
-gcloud app update
-gcloud app deploy
-gcloud app browse
+cd into the MSDS folder <br>
+git pull to get the most recent update <br>
+gcloud app update <br>
+gcloud app deploy <br>
+gcloud app browse <br>
 
 ## Run on cloud shell
 gcloud builds submit --tag gcr.io/msds434-2022-sa/mobile-app --project=msds434-2022-sa
