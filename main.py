@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from flask import Flask, render_template
 from google.cloud import bigquery
@@ -111,4 +112,4 @@ def bill_plot():
 
 
 if __name__ == "__main__":
-    app.run(host = '127.0.0.1', debug = True)
+    app.run(host = '127.0.0.1', debug = True, port=int(os.environ.get("PORT", 8080)))
