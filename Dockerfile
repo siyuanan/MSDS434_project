@@ -1,8 +1,10 @@
-FROM python:3
+FROM python:3.8
 
-RUN mkdir -p /app
-COPY . /app/
-WORKDIR /app
+ENV APP_HOME /app
+WORKDIR $APP_HOME/app
+# RUN mkdir -p /app
+COPY . ./
+
 RUN python3 -m pip install --upgrade pip && python3 -m pip install -r requirements.txt
 EXPOSE 8080
 ENTRYPOINT ["python3"]
