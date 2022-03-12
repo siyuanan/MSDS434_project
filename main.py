@@ -87,8 +87,9 @@ def pred_result():
     data = query_job.to_dataframe()
 
     return render_template('view.html', var_list = var_list,
-                           table1=[input_df.to_html(classes='data')], title1=input_df.columns.values
-                           # table2=[data.to_html(classes='data')], title2=data.columns.values
+                           input_data = input_data,
+                           # table1=[input_df.to_html(classes='data')], title1=input_df.columns.values
+                           table2=[data.to_html(classes='data')], title2=data.columns.values
                            )
 
 
