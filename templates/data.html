@@ -10,7 +10,7 @@
 
 <form action="/data" method = "POST">
     {% for s in var_list %}
-    <p>{{s | safe}} <input type = "text" name = s /></p>
+    <p>{{s | safe}} <input type = "text" name = {{s}} /></p>
     {% endfor %}
     <p><input type = "submit" value = "Submit" /></p>
 </form>
