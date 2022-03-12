@@ -69,17 +69,27 @@ def model_test():
 
 
 @app.route("/", methods=['GET', 'POST'])
-def pred_result(): 
+def pred_result():
+    var_list = ['battery_power', 'blue', 'clock_speed', 'dual_sim', 'fc', 'four_g',
+                'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height', 'px_width',
+                'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g', 'touch_screen', 'wifi']
+
+    # get input from user
+    input_data = request.form
+    input_df = pd.DataFrame.from_dict(input_data)
+
+    # retrieve prediction
     query = f'''
     SELECT * FROM {project_id}.{dataset_id}.lr_pred
     '''
     client = bigquery.Client(project = project_id)
     query_job = client.query(query)
     data = query_job.to_dataframe()
-    avg_param = data.mean(axis = 0).to_frame().reset_index()
-    input_data, temp = form()
-    input_df = pd.DataFrame.from_dict(input_data)
-    return render_template('view.html', tables=[input_df.to_html(classes='data')], titles = input_df.columns.values)
+
+    return render_template('view.html',
+                           table1=[input_df.to_html(classes='data')], title1=input_df.columns.values,
+                           table2=[data.to_html(classes='data')], title2=data.columns.values
+                           )
 
 
 @app.route('/data', methods=['GET', 'POST'])
@@ -88,7 +98,7 @@ def form():
                 'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height', 'px_width',
                 'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g', 'touch_screen', 'wifi']
     form_data = request.form
-    return form_data, render_template('data.html', var_list = var_list, form_data = form_data)
+    return render_template('data.html', var_list = var_list, form_data = form_data)
 
 
 @app.route("/billing", methods=['GET', 'POST'])
@@ -120,8 +130,6 @@ def bill_plot():
     value2 = data['forecast'].values.tolist()
 
     return render_template("bill.html", labels = labels, value1 = value1, value2 = value2)
-
-
 
 
 if __name__ == "__main__":
