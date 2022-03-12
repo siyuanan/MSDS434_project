@@ -1,7 +1,7 @@
+import os
 import pandas as pd
 from flask import Flask, render_template
 from google.cloud import bigquery
-from datetime import datetime
 
 project_id  = 'msds434-2022-sa'
 dataset_id  = 'mobile_data'
@@ -11,17 +11,7 @@ table_synth = 'synthetic'
 
 app = Flask(__name__)
 
-# @app.route("/")
-def test_df(): 
-    data = pd.DataFrame({
-        'A': [1,2,3],
-        'B': [4,5,6],
-        'C': [7,8,9]
-    })
-    return render_template('view.html',tables=[data.to_html(classes='data')], titles = data.columns.values)
-
 def model_train():
-#     t1 = datetime.now()
     query_train = f'''
         CREATE OR REPLACE MODEL {project_id}.{dataset_id}.lr_model2
           OPTIONS
@@ -55,9 +45,7 @@ def model_train():
     client = bigquery.Client(project = project_id)
     query_job = client.query(query_train)
     query_job.result()
-#     t2 = datetime.now()
-#     exe_time = (t2 - t1).total_seconds()
-    
+
     return f"<br/><br/>Model training finished"
 
 def model_test():
@@ -79,7 +67,7 @@ def model_test():
     
     return f"<br/><br/>Model prediction finished"
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def pred_result(): 
     query = f'''
     SELECT * FROM {project_id}.{dataset_id}.lr_pred
@@ -87,11 +75,12 @@ def pred_result():
     client = bigquery.Client(project = project_id)
     query_job = client.query(query)
     data = query_job.to_dataframe()
+    avg_param = data.mean(axis = 0).to_frame().reset_index()
     
-    return render_template('view.html',tables=[data.to_html(classes='data')], titles = data.columns.values)
+    return render_template('view.html',tables=[avg_param.to_html(classes='data')], titles = avg_param.columns.values)
     
 
-@app.route("/billing")
+@app.route("/billing", methods=['GET', 'POST'])
 def bill_plot(): 
     query = f'''
     SELECT DATE(usage_start_time) AS usage_date, sum(cost) as actual
@@ -118,10 +107,11 @@ def bill_plot():
     labels = list(pd.to_datetime(data['usage_date']).dt.strftime('%Y-%m-%d'))
     value1 = data['actual'].values.tolist()
     value2 = data['forecast'].values.tolist()
-    
-#     return render_template('view.html',tables = [data.to_html(classes='data')], titles = data.columns.values)
+
     return render_template("bill.html", labels = labels, value1 = value1, value2 = value2)
-#     return ' '.join(labels) + '<br/><br/>' + ' '.join([str(x) for x in values])
+
+
+
 
 if __name__ == "__main__":
     app.run(host = '127.0.0.1', debug = True, port=int(os.environ.get("PORT", 8080)))
