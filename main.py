@@ -67,6 +67,7 @@ def model_test():
     
     return f"<br/><br/>Model prediction finished"
 
+
 @app.route("/", methods=['GET', 'POST'])
 def pred_result(): 
     query = f'''
