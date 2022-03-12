@@ -9,19 +9,19 @@
 <h1> Please enter the mobile phone parameters below</h1>
 
 <form action="/data" method = "POST">
-    <p>Name <input type = "text" name = "Name" /></p>
-    <p>City <input type = "text" name = "City" /></p>
-    <p>Country <input type = "text" name = "Country" /></p>
+    {% for s in var_list %}
+    <p>{{s | safe}} <input type = "text" name = s /></p>
+    {% endfor %}
     <p><input type = "submit" value = "Submit" /></p>
 </form>
 
 <h2> Please confirm input parameters below</h2>
-<h2> Then go back to the home page for prediction</h2>
+<h3> Re-enter the parameters if needed</h3>
+<h3> Then go back to the home page for prediction</h3>
 
 <body>
 {% for key,value in form_data.items() %}
-<h3> {{key}}</h3>
-<p> {{value}}</p>
+<h3> {{key}}: {{value}}</h3>
 {% endfor %}
 </body>
 
