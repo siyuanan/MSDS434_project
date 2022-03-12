@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from google.cloud import bigquery
 
 project_id  = 'msds434-2022-sa'
@@ -79,7 +79,13 @@ def pred_result():
     avg_param = data.mean(axis = 0).to_frame().reset_index()
     
     return render_template('view.html',tables=[avg_param.to_html(classes='data')], titles = avg_param.columns.values)
-    
+
+
+@app.route('/data', methods=['GET', 'POST'])
+def form():
+    form_data = request.form
+    return render_template('data.html', form_data = form_data)
+
 
 @app.route("/billing", methods=['GET', 'POST'])
 def bill_plot(): 
