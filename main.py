@@ -70,13 +70,13 @@ def model_test():
 
 @app.route("/", methods=['GET', 'POST'])
 def pred_result():
-    var_list = ['model', 'battery_power', 'blue', 'clock_speed', 'dual_sim', 'fc', 'four_g',
-                'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height', 'px_width',
-                'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g', 'touch_screen', 'wifi']
-
-    # get input from user
-    input_data = request.form
-    input_df = pd.DataFrame.from_dict(input_data)
+    # var_list = ['model', 'battery_power', 'blue', 'clock_speed', 'dual_sim', 'fc', 'four_g',
+    #             'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height', 'px_width',
+    #             'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g', 'touch_screen', 'wifi']
+    #
+    # # get input from user
+    # input_data = request.form
+    # input_df = pd.DataFrame.from_dict(input_data)
 
     # retrieve prediction
     query = f'''
@@ -86,20 +86,21 @@ def pred_result():
     query_job = client.query(query)
     data = query_job.to_dataframe()
 
-    return render_template('view.html', var_list = var_list,
-                           input_data = input_data,
-                           # table1=[input_df.to_html(classes='data')], title1=input_df.columns.values
-                           table2=[data.to_html(classes='data')], title2=data.columns.values
+    return render_template('view.html'
+                           # , var_list = var_list
+                           # , input_data = input_data
+                           # ,table1=[input_df.to_html(classes='data')], title1=input_df.columns.values
+                           , table2=[data.to_html(classes='data')], title2=data.columns.values
                            )
 
 
-# @app.route('/data', methods=['GET', 'POST'])
-# def form():
-#     var_list = ['battery_power', 'blue', 'clock_speed', 'dual_sim', 'fc', 'four_g',
-#                 'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height', 'px_width',
-#                 'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g', 'touch_screen', 'wifi']
-#     form_data = request.form
-#     return render_template('data.html', var_list = var_list, form_data = form_data)
+@app.route('/data', methods=['GET', 'POST'])
+def form():
+    var_list = ['battery_power', 'blue', 'clock_speed', 'dual_sim', 'fc', 'four_g',
+                'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height', 'px_width',
+                'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g', 'touch_screen', 'wifi']
+    form_data = request.form
+    return render_template('data.html', var_list = var_list, form_data = form_data)
 
 
 @app.route("/billing", methods=['GET', 'POST'])
