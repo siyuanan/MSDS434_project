@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from google.cloud import bigquery
 
 project_id  = 'msds434-2022-sa'
@@ -86,11 +86,11 @@ def pred_result():
     query_job = client.query(query)
     data = query_job.to_dataframe()
 
-    return render_template('view.html'
+    return render_template('main.html',
                            # , var_list = var_list
                            # , input_data = input_data
                            # ,table1=[input_df.to_html(classes='data')], title1=input_df.columns.values
-                           , table2=[data.to_html(classes='data')], title2=data.columns.values
+                           table2=[data.to_html(classes='data')], title2=data.columns.values
                            )
 
 
