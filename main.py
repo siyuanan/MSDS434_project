@@ -124,4 +124,4 @@ def bill_plot():
 #     return ' '.join(labels) + '<br/><br/>' + ' '.join([str(x) for x in values])
 
 if __name__ == "__main__":
-    app.run(host = '127.0.0.1', debug = True)
+    app.run(host = '127.0.0.1', debug = True, port=int(os.environ.get("PORT", 8080)))
