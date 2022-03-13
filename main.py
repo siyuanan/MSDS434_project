@@ -92,12 +92,8 @@ def pred_result():
     # query_job = client.query(query)
     # data = query_job.to_dataframe()
 
-    return render_template('main.html'
-                           , var_list = var_list
-                           # , input_data = input_data
-                           # , table1=[input_df.to_html(classes='data')], title1=input_df.columns.values
-                           # , table2=[data.to_html(classes='data')], title2=data.columns.values
-                           )
+    return "<h1>Welcome to Mobile Price Range Estimate</h1>" \
+           "<h2>Please go to ./data to enter parameters</h2>"
 
 
 @app.route('/data/', methods=['GET', 'POST'])
