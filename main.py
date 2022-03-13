@@ -106,10 +106,10 @@ def home_page():
 @app.route('/pred/', methods=['GET', 'POST'])
 def pred_page():
     form_data = request.form
-    ram = form_data['ram']
-    battery_power = form_data['battery_power']
-    px_height = form_data['px_height']
-    px_width = form_data['px_width']
+    # ram = form_data['ram']
+    # battery_power = form_data['battery_power']
+    # px_height = form_data['px_height']
+    # px_width = form_data['px_width']
 
     # retrieve prediction
     query = f'''
