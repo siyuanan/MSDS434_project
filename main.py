@@ -73,11 +73,11 @@ def model_test():
 
 
 @app.route("/", methods=['GET', 'POST'])
-def pred_result():
+def home_page():
 
     # get input from user
     # if request.method == 'POST':
-    #     input_data = request.form
+    input_data = request.form
     #     input_df = pd.DataFrame.from_dict(input_data)
     #     return render_template('main.html'
     #                            , var_list = var_list
@@ -107,9 +107,8 @@ def form():
 
 @app.route('/pred/', methods=['GET', 'POST'])
 def pred_page():
-
     form_data = request.form
-    return render_template('pred.html', var_list = var_list, form_data = form_data)
+    return render_template('pred.html', form_data = form_data)
 
 
 @app.route("/billing/", methods=['GET', 'POST'])
