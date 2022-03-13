@@ -76,14 +76,8 @@ def model_test():
 def home_page():
 
     # get input from user
-    # if request.method == 'POST':
     input_data = request.form
     #     input_df = pd.DataFrame.from_dict(input_data)
-    #     return render_template('main.html'
-    #                            , var_list = var_list
-    #                            , table1=[input_df.to_html(classes='data')], title1=input_df.columns.values
-    #                            )
-
 
     # retrieve prediction
     # query = f'''
@@ -95,7 +89,7 @@ def home_page():
 
     return render_template('main.html'
                            , var_list = var_list
-                           # , table1=[input_df.to_html(classes='data')], title1=input_df.columns.values
+                           , input_data = input_data
                            )
 
 
