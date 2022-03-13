@@ -140,8 +140,8 @@ def pred_page():
                            , form_data = form_data
                            , pred = pred
                            # , probs = probs
-                           # , table_pred = table_pred
-                           # , title_pred = table_pred.columns.values
+                           , table_pred = table_pred
+                           , title_pred = table_pred.columns.values
                            )
 
 
