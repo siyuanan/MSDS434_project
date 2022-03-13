@@ -105,11 +105,11 @@ def home_page():
 
 @app.route('/pred/', methods=['GET', 'POST', 'PUT'])
 def pred_page():
-    form_data = request.form
-    ram = form_data['ram']
-    battery_power = form_data['battery_power']
-    px_height = form_data['px_height']
-    px_width = form_data['px_width']
+    input_data = request.form
+    ram = input_data.get('ram')
+    battery_power = input_data.get('battery_power')
+    px_height = input_data.get('px_height')
+    px_width = input_data.get('px_width')
 
     # retrieve prediction
     query = f'''
@@ -136,7 +136,7 @@ def pred_page():
     probs = df_pred.loc[0, 'predicted_label_probs']
 
     return render_template('pred.html'
-                           , form_data = form_data
+                           , input_data = input_data
                            , pred = pred
                            # , probs = probs
                            , table_pred = table_pred
