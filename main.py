@@ -74,7 +74,7 @@ def model_test():
 def home_page():
 
     # get input from user
-    input_data = request.form
+    # input_data = request.form
     # input_df = pd.DataFrame.from_dict(input_data)
 
     # retrieve average parameters
@@ -93,7 +93,7 @@ def home_page():
 
     return render_template('main.html'
                            , var_list = var_list
-                           , input_data = input_data
+                           # , input_data = input_data
                            , table1 = [avg_param.to_html(classes='data')]
                            , title1 = avg_param.columns.values
                            )
