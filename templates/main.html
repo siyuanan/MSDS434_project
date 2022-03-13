@@ -13,12 +13,12 @@
         
     <h1> Please enter the mobile phone parameters</h1>
 
-<!--    <form action="/" method = "POST">-->
-<!--        {% for s in var_list %}-->
-<!--        <p>{{s | safe}} <input type = "text" name = {{s}} /></p>-->
-<!--        {% endfor %}-->
-<!--        <p><input type = "submit" value = "Submit" /></p>-->
-<!--    </form>-->
+    <form action="/pred" method = "POST">
+        {% for s in var_list %}
+        <p>{{s | safe}} <input type = "text" name = {{s}} /></p>
+        {% endfor %}
+        <p><input type = "submit" value = "Submit" /></p>
+    </form>
 
 <!--    <body>-->
 <!--    {% for key,value in input_data.items() %}-->
@@ -26,12 +26,12 @@
 <!--    {% endfor %}-->
 <!--    </body>-->
 
-    <body>
-    {% for table in table1 %}
-                {{title1[loop.index]}}
-                {{ table|safe }}
-    {% endfor %}
-    </body>
+<!--    <body>-->
+<!--    {% for table in table1 %}-->
+<!--                {{title1[loop.index]}}-->
+<!--                {{ table|safe }}-->
+<!--    {% endfor %}-->
+<!--    </body>-->
 
 <!--    <body>-->
 <!--    {% for table in table2 %}-->
