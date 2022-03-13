@@ -9,9 +9,7 @@ table_train = 'train'
 table_test  = 'test'
 table_synth = 'synthetic'
 
-var_list = ['battery_power', 'blue', 'clock_speed', 'dual_sim', 'fc', 'four_g',
-            'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height', 'px_width',
-            'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g', 'touch_screen', 'wifi']
+var_list = ['battery_power', 'px_height', 'px_width', 'ram']
 
 app = Flask(__name__)
 
@@ -77,26 +75,32 @@ def home_page():
 
     # get input from user
     input_data = request.form
-    #     input_df = pd.DataFrame.from_dict(input_data)
+    input_df = pd.DataFrame.from_dict(input_data)
 
     # retrieve prediction
-    # query = f'''
-    # SELECT * FROM {project_id}.{dataset_id}.lr_pred
-    # '''
-    # client = bigquery.Client(project = project_id)
-    # query_job = client.query(query)
-    # data = query_job.to_dataframe()
+    query = f'''
+    SELECT avg(ram) as ram
+        , avg(battery_power) as battery_power
+        , avg(px_height) as px_height
+        , avg(px_width) as px_width
+    FROM {project_id}.{dataset_id}.lr_pred
+    '''
+    client = bigquery.Client(project = project_id)
+    query_job = client.query(query)
+    avg_param = query_job.to_dataframe()
 
     return render_template('main.html'
                            , var_list = var_list
                            , input_data = input_data
+                           , table1 = [avg_param.to_html(classes='data')]
+                           , title1 = avg_param.columns.values
                            )
 
 
-@app.route('/data/', methods=['GET', 'POST'])
-def form():
-    form_data = request.form
-    return render_template('data.html', var_list = var_list, form_data = form_data)
+# @app.route('/data/', methods=['GET', 'POST'])
+# def form():
+#     form_data = request.form
+#     return render_template('data.html', var_list = var_list, form_data = form_data)
 
 
 @app.route('/pred/', methods=['GET', 'POST'])

@@ -10,8 +10,16 @@
     <h2>
     This is for mobile price range prediction
     </h2>
-        
-    <h1> Please enter the mobile phone parameters</h1>
+
+    <h2>Average parameters</h2>
+        <body>
+        {% for table in table1 %}
+                    {{title1[loop.index]}}
+                    {{ table|safe }}
+        {% endfor %}
+        </body>
+
+    <h2> Please enter the mobile phone parameters</h2>
 
     <form action="/pred/" method = "POST">
         {% for s in var_list %}
