@@ -130,7 +130,7 @@ def pred_page():
     df_pred['diff_width'] = (df_pred['px_width'] - px_width).abs()
     df_pred['score'] = 310 * df_pred['diff_ram'] + 185 * df_pred['diff_power'] \
                        + 137 * df_pred['diff_width'] + 128 * df_pred['diff_height']
-    df_pred.sort_values(by = 'score', inplace = True, ignore_index = True)
+    df_pred.sort_values(by = 'score', inplace = True, ignore_index = True).reset_index()
     table_pred = df_pred.head(1)[['predicted_label', 'predicted_label_probs']]
     pred = df_pred.loc[0, 'predicted_label']
     probs = df_pred.loc[0, 'predicted_label_probs']
@@ -139,9 +139,9 @@ def pred_page():
     return render_template('pred.html'
                            , form_data = form_data
                            , pred = pred
-                           , probs = probs
-                           , table_pred = table_pred
-                           , title_pred = table_pred.columns.values
+                           # , probs = probs
+                           # , table_pred = table_pred
+                           # , title_pred = table_pred.columns.values
                            )
 
 
