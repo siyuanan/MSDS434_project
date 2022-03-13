@@ -138,7 +138,7 @@ def pred_page():
     return render_template('pred.html'
                            , input_data = input_data
                            , pred = pred
-                           # , probs = probs
+                           , probs = probs
                            , table_pred = table_pred
                            , title_pred = table_pred.columns.values
                            )
