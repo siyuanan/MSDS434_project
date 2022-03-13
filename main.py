@@ -99,10 +99,10 @@ def home_page():
                            )
 
 
-# @app.route('/data/', methods=['GET', 'POST'])
-# def form():
-#     form_data = request.form
-#     return render_template('data.html', var_list = var_list, form_data = form_data)
+@app.route('/data/', methods=['GET', 'POST'])
+def form():
+    form_data = request.form
+    return render_template('data.html', var_list = var_list, form_data = form_data)
 
 
 @app.route('/pred/', methods=['GET', 'POST'])
