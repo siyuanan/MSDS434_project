@@ -121,15 +121,15 @@ def pred_page():
     , px_width
     FROM {project_id}.{dataset_id}.rf_pred
     '''
-    client = bigquery.Client(project=project_id)
-    query_job = client.query(query)
-    df_pred = query_job.to_dataframe()
-    df_pred['diff_ram'] = (df_pred['ram'] - ram).abs()
-    df_pred['diff_power'] = (df_pred['battery_power'] - battery_power).abs()
-    df_pred['diff_height'] = (df_pred['px_height'] - px_height).abs()
-    df_pred['diff_width'] = (df_pred['px_width'] - px_width).abs()
-    df_pred['score'] = 310 * df_pred['diff_ram'] + 185 * df_pred['diff_power'] \
-                       + 137 * df_pred['diff_width'] + 128 * df_pred['diff_height']
+    # client = bigquery.Client(project=project_id)
+    # query_job = client.query(query)
+    # df_pred = query_job.to_dataframe()
+    # df_pred['diff_ram'] = (df_pred['ram'] - ram).abs()
+    # df_pred['diff_power'] = (df_pred['battery_power'] - battery_power).abs()
+    # df_pred['diff_height'] = (df_pred['px_height'] - px_height).abs()
+    # df_pred['diff_width'] = (df_pred['px_width'] - px_width).abs()
+    # df_pred['score'] = 310 * df_pred['diff_ram'] + 185 * df_pred['diff_power'] \
+    #                    + 137 * df_pred['diff_width'] + 128 * df_pred['diff_height']
     # df_pred.sort_values(by = 'score', inplace = True, ignore_index = True).reset_index()
     # table_pred = df_pred.head(1)[['predicted_label', 'predicted_label_probs']]
     # pred = df_pred.loc[0, 'predicted_label']
@@ -140,8 +140,8 @@ def pred_page():
                            , form_data = form_data
                            # , pred = pred
                            # , probs = probs
-                           , table_pred = df_pred
-                           , title_pred = df_pred.columns.values
+                           # , table_pred = df_pred
+                           # , title_pred = df_pred.columns.values
                            )
 
 
