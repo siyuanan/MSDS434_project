@@ -70,11 +70,11 @@ def model_test():
     return f"<br/><br/>Model prediction finished"
 
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST', 'PUT'])
 def home_page():
 
     # get input from user
-    # input_data = request.form
+    input_data = request.form
     # input_df = pd.DataFrame.from_dict(input_data)
 
     # retrieve average parameters
@@ -89,11 +89,9 @@ def home_page():
     query_job = client.query(query)
     avg_param = query_job.to_dataframe().round(0)
 
-    # input_data = request.form
-
     return render_template('main.html'
                            , var_list = var_list
-                           # , input_data = input_data
+                           , input_data = input_data
                            , table1 = [avg_param.to_html(classes='data')]
                            , title1 = avg_param.columns.values
                            )
@@ -105,45 +103,44 @@ def home_page():
 #     return render_template('data.html', var_list = var_list, form_data = form_data)
 
 
-@app.route('/pred/', methods=['GET', 'POST'])
+@app.route('/pred/', methods=['GET', 'POST', 'PUT'])
 def pred_page():
     form_data = request.form
-    # ram = form_data['ram']
-    # battery_power = form_data['battery_power']
-    # px_height = form_data['px_height']
-    # px_width = form_data['px_width']
+    ram = form_data['ram']
+    battery_power = form_data['battery_power']
+    px_height = form_data['px_height']
+    px_width = form_data['px_width']
 
     # retrieve prediction
-    # query = f'''
-    # SELECT predicted_label
-    # , predicted_label_probs
-    # , battery_power
-    # , ram
-    # , px_height
-    # , px_width
-    # FROM {project_id}.{dataset_id}.rf_pred
-    # '''
-    # client = bigquery.Client(project=project_id)
-    # query_job = client.query(query)
-    # df_pred = query_job.to_dataframe()
-    # df_pred['diff_ram'] = (df_pred['ram'] - ram).abs()
-    # df_pred['diff_power'] = (df_pred['battery_power'] - battery_power).abs()
-    # df_pred['diff_height'] = (df_pred['px_height'] - px_height).abs()
-    # df_pred['diff_width'] = (df_pred['px_width'] - px_width).abs()
-    # df_pred['score'] = 310 * df_pred['diff_ram'] + 185 * df_pred['diff_power'] \
-    #                    + 137 * df_pred['diff_width'] + 128 * df_pred['diff_height']
-    # df_pred.sort_values(by = 'score', inplace = True, ignore_index = True).reset_index()
-    # table_pred = df_pred.head(1)[['predicted_label', 'predicted_label_probs']]
-    # pred = df_pred.loc[0, 'predicted_label']
-    # probs = df_pred.loc[0, 'predicted_label_probs']
-
+    query = f'''
+    SELECT predicted_label
+    , predicted_label_probs
+    , battery_power
+    , ram
+    , px_height
+    , px_width
+    FROM {project_id}.{dataset_id}.rf_pred
+    '''
+    client = bigquery.Client(project=project_id)
+    query_job = client.query(query)
+    df_pred = query_job.to_dataframe()
+    df_pred['diff_ram'] = (df_pred['ram'] - ram).abs()
+    df_pred['diff_power'] = (df_pred['battery_power'] - battery_power).abs()
+    df_pred['diff_height'] = (df_pred['px_height'] - px_height).abs()
+    df_pred['diff_width'] = (df_pred['px_width'] - px_width).abs()
+    df_pred['score'] = 310 * df_pred['diff_ram'] + 185 * df_pred['diff_power'] \
+                       + 137 * df_pred['diff_width'] + 128 * df_pred['diff_height']
+    df_pred.sort_values(by = 'score', inplace = True, ignore_index = True).reset_index()
+    table_pred = df_pred.head(1)[['predicted_label', 'predicted_label_probs']]
+    pred = df_pred.loc[0, 'predicted_label']
+    probs = df_pred.loc[0, 'predicted_label_probs']
 
     return render_template('pred.html'
                            , form_data = form_data
-                           # , pred = pred
+                           , pred = pred
                            # , probs = probs
-                           # , table_pred = df_pred
-                           # , title_pred = df_pred.columns.values
+                           , table_pred = table_pred
+                           , title_pred = table_pred.columns.values
                            )
 
 
