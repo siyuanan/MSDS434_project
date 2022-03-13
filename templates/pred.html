@@ -18,9 +18,16 @@
 <h3>Level: {{pred | safe}}</h3>
 
 <body>
-{% for key,value in probs.items() %}
-<h3> {{key}}: {{value}}</h3>
+{% for table in table_pred %}
+{{title_pred[loop.index]}}
+{{ table|safe }}
 {% endfor %}
 </body>
+
+<!--<body>-->
+<!--{% for key,value in probs.items() %}-->
+<!--<h3> {{key}}: {{value}}</h3>-->
+<!--{% endfor %}-->
+<!--</body>-->
 
 </html>
