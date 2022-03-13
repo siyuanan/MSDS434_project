@@ -24,7 +24,7 @@ def main_test():
 def form():
     form_data = request.form
 
-    return render_template('data.html', form_data = form_data)
+    return render_template('data.html', form_data = form_data, var_list = ['name', 'country'])
 
 
 if __name__ == "__main__":

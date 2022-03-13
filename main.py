@@ -89,9 +89,11 @@ def home_page():
     query_job = client.query(query)
     avg_param = query_job.to_dataframe().round(0)
 
+    # input_data = request.form
+
     return render_template('main.html'
                            , var_list = var_list
-                           , input_data = input_data
+                           # , input_data = input_data
                            , table1 = [avg_param.to_html(classes='data')]
                            , title1 = avg_param.columns.values
                            )
@@ -112,15 +114,15 @@ def pred_page():
     # px_width = form_data['px_width']
 
     # retrieve prediction
-    query = f'''
-    SELECT predicted_label
-    , predicted_label_probs
-    , battery_power
-    , ram
-    , px_height
-    , px_width
-    FROM {project_id}.{dataset_id}.rf_pred
-    '''
+    # query = f'''
+    # SELECT predicted_label
+    # , predicted_label_probs
+    # , battery_power
+    # , ram
+    # , px_height
+    # , px_width
+    # FROM {project_id}.{dataset_id}.rf_pred
+    # '''
     # client = bigquery.Client(project=project_id)
     # query_job = client.query(query)
     # df_pred = query_job.to_dataframe()
