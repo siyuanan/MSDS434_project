@@ -6,10 +6,19 @@
     <title>Prediction</title>
 </head>
 
-<h1> The input parameters</h1>
+<h1> The input configs</h1>
 
 <body>
 {% for key,value in form_data.items() %}
+<h3> {{key}}: {{value}}</h3>
+{% endfor %}
+</body>
+
+<h2>Estimated Price Range</h2>
+<h3>Level: {{pred | safe}}</h3>
+
+<body>
+{% for key,value in probs.items() %}
 <h3> {{key}}: {{value}}</h3>
 {% endfor %}
 </body>

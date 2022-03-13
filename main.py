@@ -77,17 +77,17 @@ def home_page():
     input_data = request.form
     input_df = pd.DataFrame.from_dict(input_data)
 
-    # retrieve prediction
+    # retrieve average parameters
     query = f'''
     SELECT avg(ram) as ram
         , avg(battery_power) as battery_power
         , avg(px_height) as px_height
         , avg(px_width) as px_width
-    FROM {project_id}.{dataset_id}.lr_pred
+    FROM {project_id}.{dataset_id}.rf_pred
     '''
     client = bigquery.Client(project = project_id)
     query_job = client.query(query)
-    avg_param = query_job.to_dataframe()
+    avg_param = query_job.to_dataframe().round(0)
 
     return render_template('main.html'
                            , var_list = var_list
@@ -106,7 +106,40 @@ def home_page():
 @app.route('/pred/', methods=['GET', 'POST'])
 def pred_page():
     form_data = request.form
-    return render_template('pred.html', form_data = form_data)
+    ram = form_data['ram']
+    battery_power = form_data['battery_power']
+    px_height = form_data['px_height']
+    px_width = form_data['px_width']
+
+    # retrieve prediction
+    query = f'''
+    SELECT predicted_label
+    , predicted_label_probs
+    , battery_power
+    , ram
+    , px_height
+    , px_width
+    FROM {project_id}.{dataset_id}.rf_pred
+    '''
+    client = bigquery.Client(project=project_id)
+    query_job = client.query(query)
+    df_pred = query_job.to_dataframe()
+    df_pred['diff_ram'] = (df_pred['ram'] - ram).abs()
+    df_pred['diff_power'] = (df_pred['battery_power'] - battery_power).abs()
+    df_pred['diff_height'] = (df_pred['px_height'] - px_height).abs()
+    df_pred['diff_width'] = (df_pred['px_width'] - px_width).abs()
+    df_pred['score'] = 310 * df_pred['diff_ram'] + 185 * df_pred['diff_power'] \
+                       + 137 * df_pred['diff_width'] + 128 * df_pred['diff_height']
+    df_pred.sort_values(by = 'score', inplace = True, ignore_index = True)
+    pred = df_pred.loc[0, 'predicted_label']
+    probs = df_pred.loc[0, 'predicted_label_probs']
+
+
+    return render_template('pred.html'
+                           , form_data = form_data
+                           , pred = pred
+                           , probs = probs
+                           )
 
 
 @app.route("/billing/", methods=['GET', 'POST'])
