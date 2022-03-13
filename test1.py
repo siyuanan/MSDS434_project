@@ -20,6 +20,11 @@ def main_test():
     assert r.status_code == 200
     assert 'Welcome to the new app!' in r.data.decode('utf-8')
 
+@app.route('/form', methods=['GET', 'POST'])
+def form():
+    form_data = request.form
+
+
 @app.route('/data', methods=['GET', 'POST'])
 def form():
     form_data = request.form
