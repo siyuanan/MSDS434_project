@@ -11,20 +11,20 @@
     This is for mobile price range prediction
     </h2>
         
-    <h1> Please enter the mobile phone parameters at ./data</h1>
+    <h1> Please enter the mobile phone parameters</h1>
 
-<!--    <form action="/" method = "POST">-->
-<!--        {% for s in var_list %}-->
-<!--        <p>{{s | safe}} <input type = "text" name = {{s}} /></p>-->
-<!--        {% endfor %}-->
-<!--        <p><input type = "submit" value = "Submit" /></p>-->
-<!--    </form>-->
+    <form action="/" method = "POST">
+        {% for s in var_list %}
+        <p>{{s | safe}} <input type = "text" name = {{s}} /></p>
+        {% endfor %}
+        <p><input type = "submit" value = "Submit" /></p>
+    </form>
 
-<!--    <body>-->
-<!--    {% for key,value in input_data.items() %}-->
-<!--    <h3> {{key}}: {{value}}</h3>-->
-<!--    {% endfor %}-->
-<!--    </body>-->
+    <body>
+    {% for key,value in input_data.items() %}
+    <h3> {{key}}: {{value}}</h3>
+    {% endfor %}
+    </body>
 
 <!--    <body>-->
 <!--    {% for table in table1 %}-->
@@ -33,12 +33,12 @@
 <!--    {% endfor %}-->
 <!--    </body>-->
 
-    <body>
-    {% for table in table2 %}
-                {{title2[loop.index]}}
-                {{ table|safe }}
-    {% endfor %}
-    </body>
+<!--    <body>-->
+<!--    {% for table in table2 %}-->
+<!--                {{title2[loop.index]}}-->
+<!--                {{ table|safe }}-->
+<!--    {% endfor %}-->
+<!--    </body>-->
     
 
 </html>
