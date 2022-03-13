@@ -75,8 +75,14 @@ def pred_result():
                 'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g', 'touch_screen', 'wifi']
 
     # get input from user
-    input_data = request.form
-    # input_df = pd.DataFrame.from_dict(input_data)
+    if request.method == 'POST':
+        input_data = request.form
+        input_df = pd.DataFrame.from_dict(input_data)
+        return render_template('main.html'
+                               , var_list = var_list
+                               , table1=[input_df.to_html(classes='data')], title1=input_df.columns.values
+                               )
+
 
     # retrieve prediction
     # query = f'''
@@ -88,13 +94,13 @@ def pred_result():
 
     return render_template('main.html'
                            , var_list = var_list
-                           , input_data = input_data
+                           # , input_data = input_data
                            # , table1=[input_df.to_html(classes='data')], title1=input_df.columns.values
                            # , table2=[data.to_html(classes='data')], title2=data.columns.values
                            )
 
 
-@app.route('/data', methods=['GET', 'POST'])
+@app.route('/data/', methods=['GET', 'POST'])
 def form():
     var_list = ['battery_power', 'blue', 'clock_speed', 'dual_sim', 'fc', 'four_g',
                 'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height', 'px_width',
@@ -103,7 +109,7 @@ def form():
     return render_template('data.html', var_list = var_list, form_data = form_data)
 
 
-@app.route("/billing", methods=['GET', 'POST'])
+@app.route("/billing/", methods=['GET', 'POST'])
 def bill_plot(): 
     query = f'''
     SELECT DATE(usage_start_time) AS usage_date, sum(cost) as actual

@@ -20,18 +20,18 @@
         <p><input type = "submit" value = "Submit" /></p>
     </form>
 
-    <body>
-    {% for key,value in input_data.items() %}
-    <h3> {{key}}: {{value}}</h3>
-    {% endfor %}
-    </body>
-
 <!--    <body>-->
-<!--    {% for table in table1 %}-->
-<!--                {{title1[loop.index]}}-->
-<!--                {{ table|safe }}-->
+<!--    {% for key,value in input_data.items() %}-->
+<!--    <h3> {{key}}: {{value}}</h3>-->
 <!--    {% endfor %}-->
 <!--    </body>-->
+
+    <body>
+    {% for table in table1 %}
+                {{title1[loop.index]}}
+                {{ table|safe }}
+    {% endfor %}
+    </body>
 
 <!--    <body>-->
 <!--    {% for table in table2 %}-->
