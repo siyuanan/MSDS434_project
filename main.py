@@ -9,7 +9,7 @@ table_train = 'train'
 table_test  = 'test'
 table_synth = 'synthetic'
 
-var_list = ['battery_power', 'px_height', 'px_width', 'ram']
+var_list = ['ram', 'battery_power', 'px_height', 'px_width']
 
 app = Flask(__name__)
 
@@ -139,8 +139,6 @@ def pred_page():
                            , input_data = input_data
                            , pred = pred
                            , probs = probs
-                           , table_pred = table_pred
-                           , title_pred = table_pred.columns.values
                            )
 
 

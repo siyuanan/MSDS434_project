@@ -17,14 +17,11 @@
 <h2>Estimated Price Range</h2>
 <h3>{{pred}}</h3>
 
-<h3>{{probs}}</h3>
-
+<h3>Probability for each level</h3>
 <body>
-{% for table in table_pred %}
-{{title_pred[loop.index]}}
-{{ table|safe }}
-{% endfor %}
+{% for prob in probs %}
+{{ prob }}
+{% end for %}
 </body>
-
 
 </html>
